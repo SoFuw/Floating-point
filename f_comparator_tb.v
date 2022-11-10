@@ -1,4 +1,4 @@
-`timescale 1ns/1ps
+`timescale 1ns/10ps
 `include "./f_comparator.v"
 module f_comparator_tb;
 
@@ -14,6 +14,10 @@ f_comparator u_f_comparator(
     .res(res)
 );
 
+initial begin
+    $dumpfile("f_comparator.vcd");
+    $dumpvars(1);
+end
 
 initial begin
     f = $fopen("f_comparator_log.txt","w");
@@ -21,10 +25,10 @@ initial begin
     begin
         in0 <= $random;
         in1 <= $random;
-        $fwrite(f,"cnt : %d\n",cnt);
-        $fwrite(f,"in0 : %b\n",in0);
-        $fwrite(f,"in1 : %b\n",in1);
-        $fwrite(f,"out : %b\n\n",res);
+        $fwrite(f,"%d\n",cnt);
+        $fwrite(f,"%b\n",in0);
+        $fwrite(f,"%b\n",in1);
+        $fwrite(f,"%b\n",res);
         #10;
     end
     $fclose(f);
