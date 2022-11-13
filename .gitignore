@@ -3,3 +3,4 @@ build/
 trash/
 *.out
 *.txt
+*.cpp
