@@ -1,5 +1,5 @@
 `timescale 1ns/10ps
-
+`include "../f_comparator.v"
 module f_adder (
     input clk,
     input rstn,
@@ -45,10 +45,10 @@ always@(*)begin
     //cal  
     smaller[23:0] = (op == 0) ? (bigger[22:0] + smaller[22:0]) : (bigger[22:0] - smaller[22:0]);
     //carry 
-    if(smaller[23]==1)
+    if(smaller[23]==1'b1)
         bigger[30:23] = bigger[30:23] + {{7{1'b0}},1'b1};
     //we use bigger sign 
-    bigger[22:0] = smaller [22:0]
+    bigger[22:0] = smaller[22:0];
     //save result 
     result = bigger;
 end
