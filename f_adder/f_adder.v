@@ -13,6 +13,7 @@ module f_adder (
 wire in0_bt_in1;
 reg [31:0] bigger;
 reg [31:0] smaller;
+reg [23:0] test;
 reg [7:0] exp;
 reg [31:0] result;
 
@@ -42,9 +43,10 @@ always@(*)begin
     exp = bigger[30:23] - smaller[30:23];
     //shift 
     smaller[22:0] = smaller[22:0] >> exp;
-    //cal  
+    // //cal  
     smaller[23:0] = (op == 0) ? (bigger[22:0] + smaller[22:0]) : (bigger[22:0] - smaller[22:0]);
     //carry 
+    test = smaller[23:0];
     if(smaller[23]==1'b1)
         bigger[30:23] = bigger[30:23] + {{7{1'b0}},1'b1};
     //we use bigger sign 

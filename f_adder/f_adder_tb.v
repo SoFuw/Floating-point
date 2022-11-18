@@ -23,7 +23,7 @@ integer i;
 integer f;
 initial begin
     $dumpfile("f_adder.vcd");
-    $dumpvars(1);
+    $dumpvars(0);
 end
 
 initial begin
