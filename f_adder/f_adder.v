@@ -16,6 +16,8 @@ reg [31:0] smaller;
 reg check_sign;
 reg [7:0] exp;
 reg [31:0] result;
+//미리 부호를 처리하는게 좋을거 같다는 생긱이 들지 않뉘? ㅋ..
+/// 보수 만드는걸 해야긋네
 
 f_comparator u_f_comparator(
     .in0(in0),
@@ -53,16 +55,28 @@ always@(*)begin
     //shift 
     smaller[22:0] = smaller[22:0] >> exp;
 
-    // //cal  
-    smaller[23:0] = (op == 0) ? (bigger[22:0] + smaller[22:0]) : (bigger[22:0] - smaller[22:0]);
+    //cal
+    result[23:0] = (bigger[31] ^ smaller[31]) ? bigger[22:0] - smaller[22:0]: bigger[22:0] + smaller[22:0];
 
-    //carry 
-    if(smaller[23]==1'b1 && bigger[30:23] != 8'hff)
-        bigger[30:23] = bigger[30:23] + {{7{1'b0}},1'b1};
-    //we use bigger sign 
-    bigger[22:0] = smaller[22:0];
-    //save result 
-    result = bigger;
+    //exp with carry 
+    if(result[23])
+        result[30:23] = bigger[30:23] + {{7{1'b0}},1'b1};
+    else 
+        result[30:23] = bigger[30:23];
+
+    // assign sign
+
+    result[31] = bigger[31];
 end
     
 endmodule
+
+
+    // //cal  
+    // case ({bigger[31],smaller[31]})
+    //     2'b00: result[23:0] = bigger[22:0] + smaller[22:0];
+    //     2'b01: result[23:0] = bigger[22:0] - smaller[22:0];
+    //     //this case.. ...!? same bacause sign bit.
+    //     2'b10: result[23:0] = bigger[22:0] - smaller[22:0];
+    //     2'b11: result[23:0] = bigger[22:0] + smaller[22:0];
+    // endcase
