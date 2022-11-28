@@ -1,5 +1,5 @@
 `timescale 1ns/1ps
-
+`include "./f_adder/f_adder.v"
 //with binary32
 
 module f32_alu(
@@ -13,8 +13,9 @@ module f32_alu(
 );
     
 reg [31:0] out;
+wire [31:0] adder_out;
 reg [1:0] opOut;
-
+// op 00 add 01 sub 10 multi 11 divide
 always @(posedge clk or negedge rstn) begin
     if(!rstn) begin
         out <= {32{1'b0}};
@@ -22,4 +23,15 @@ always @(posedge clk or negedge rstn) begin
     end
     
 end
+
+
+f_adder u_f_adder(
+    .clk(clk),
+    .rstn(rstn),
+    .in0(in0),
+    .in1(in1),
+    .op(opcode[0]),
+    .out(adder_out)
+);
+
 endmodule
