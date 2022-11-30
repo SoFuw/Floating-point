@@ -30,11 +30,11 @@ initial begin
     $display("start!");
     for(i = 0; i <= 4'b1111 ; i= i+1)begin
         for(j=0;j<=4'b1111; j= j+1)begin
-            #10 in0 = i; in1 = j;
+            #100 in0 = i; in1 = j;
         end
     end
     $display("done!");
-    #10 $finish
+    #100 $finish
 
 end
 endmodule
