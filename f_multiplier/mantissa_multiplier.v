@@ -7,10 +7,11 @@ module mantissa_multiplier #(
 ) (
     input [BIT_WIDTH-1:0] in0,
     input [BIT_WIDTH-1:0] in1,
-    output [BIT_WIDTH-1:0] out
+    output reg [BIT_WIDTH-1:0] out,
+    output reg carry
 );
 
-reg [(BIT_WIDTH+1) * 2 : 0] res;
+reg [(BIT_WIDTH + 1) * 2  : 0] res;
 reg [bit_cnt_func(BIT_WIDTH+1)-1:0] i;
 reg flag_zero;
 
@@ -23,16 +24,19 @@ always@(*)begin
 
     for(i = BIT_WIDTH+1; i > 0; i = i - 1'b1)begin
         if(flag_zero) #5 res = 0;
-        else if(res[0]) #5 res[BIT_WIDTH * 2 + 1 -: (BIT_WIDTH+1)] = res[BIT_WIDTH * 2 + 1 -: (BIT_WIDTH+1)] + {1'b1,in0};
+        else if(res[0]) #5 res[(BIT_WIDTH+1) * 2 -: (BIT_WIDTH + 2)] = res[(BIT_WIDTH+1) * 2 -: (BIT_WIDTH + 2)] + {2'b01,in0};
 
         #5 res = res >>1;
+           carry = res[(BIT_WIDTH+1)*2-1];
     end
 
+    if(carry) out = res[((BIT_WIDTH + 1) * 2 -2)  -: (BIT_WIDTH)];
+    else out = res[((BIT_WIDTH + 1) * 2 -3)  -: (BIT_WIDTH)];
+//BIT_WIDTH * 2 + 1 -: (BIT_WIDTH+1) 여기부터 시작하면 carry시에 값을 날려버리는 현상이 존재한다
+//당연한건데 이딴걸 못보고 븅순..
+// 어차피 캐리 밀어버려서 BIT_WIDTH*2 + 2 해도 ㄱㅊ
 end
 
-//don't need 1 of 1.xxxx 
-assign out = res[BIT_WIDTH * 2 -: (BIT_WIDTH+1)];
-    
 
 //verilog에서 이게 한계다 변수 추가를 하는건 불가능함 ㅋㅋ
 function integer bit_cnt_func;
