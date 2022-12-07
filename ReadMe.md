@@ -49,3 +49,7 @@ exp carry를 시키는걸 잊지마라!
 >> http://weitz.de/ieee/
 >> 이 사이트 매우 편리함 부동소수점 계산에
 >>>검증을 어떻게 할지 고민된다  
+
+# 2022-12-07
+round mode,ulp,overflow,underflow check..
+>>어느정도 얼추 계산은 맞는것 같다.
