@@ -53,3 +53,8 @@ exp carry를 시키는걸 잊지마라!
 # 2022-12-07
 round mode,ulp,overflow,underflow check..
 >>어느정도 얼추 계산은 맞는것 같다.
+
+# 2022-12-14  
+일단 곱셈기는 붙여놨다.  
+나눗셈기는 slow 버전으로 restore,not restore 버전으로 만들어 본다.  
+>>추후에는 뉴턴법으로 구하는 나눗셈기를 만들어 본다

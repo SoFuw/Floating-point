@@ -2,6 +2,7 @@
 
 //unsigned_multiplier
 //round to down
+//GRS를 이용해서 rount to nearest even
 module mantissa_multiplier #(
     parameter integer BIT_WIDTH = 23
 ) (
@@ -14,7 +15,8 @@ module mantissa_multiplier #(
 reg [(BIT_WIDTH + 1) * 2  : 0] res;
 reg [bit_cnt_func(BIT_WIDTH+1)-1:0] i;
 reg [1:0] flag_zero;
-
+reg mantissa_last;
+reg G,R,S;
 localparam BOTH_ZERO=2'b11;
 localparam EITHER_ZERO_LEFT=2'b10;
 localparam EITHER_ZERO_RIGHT=2'b01;
@@ -31,8 +33,60 @@ always@(*)begin
         if(res[0]) res[(BIT_WIDTH+1) * 2 -: (BIT_WIDTH + 2)] = res[(BIT_WIDTH+1) * 2 -: (BIT_WIDTH + 2)] + {2'b01,in0};
 
         res = res >>1;
-           carry = res[(BIT_WIDTH+1)*2-1];
+        carry = res[(BIT_WIDTH+1)*2-1];
     end
+    
+    if(carry)begin
+        mantissa_last=res[BIT_WIDTH+1];
+        G=res[BIT_WIDTH];
+        R=res[BIT_WIDTH-1];
+        S=|res[BIT_WIDTH-2:0];
+       
+    end else begin
+        mantissa_last=res[BIT_WIDTH];
+        G=res[BIT_WIDTH-1];
+        R=res[BIT_WIDTH-2];
+        S=|res[BIT_WIDTH-3:0];
+    
+    end 
+
+    case ({G,R,S})
+        3'b000:begin
+            //round down(do nothing)
+        end 
+        3'b001:begin
+            //round down(do nothing)
+        end 
+        3'b010:begin
+            //round down(do nothing)
+        end 
+        3'b011:begin
+            //round down(do nothing)
+        end 
+        3'b100:begin
+            if(mantissa_last)begin
+                res[(BIT_WIDTH+1) * 2 -: (BIT_WIDTH + 2)] = res[(BIT_WIDTH+1) * 2 -: (BIT_WIDTH + 2)] + 1'b1;
+                //round up case
+            end
+            //round down(do nothing)
+        end 
+        3'b101:begin
+            res[(BIT_WIDTH+1) * 2 -: (BIT_WIDTH + 2)] = res[(BIT_WIDTH+1) * 2 -: (BIT_WIDTH + 2)] + 1'b1;
+            
+        end 
+        3'b110:begin
+            res[(BIT_WIDTH+1) * 2 -: (BIT_WIDTH + 2)] = res[(BIT_WIDTH+1) * 2 -: (BIT_WIDTH + 2)] + 1'b1;
+            
+        end 
+        3'b111:begin
+            res[(BIT_WIDTH+1) * 2 -: (BIT_WIDTH + 2)] = res[(BIT_WIDTH+1) * 2 -: (BIT_WIDTH + 2)] + 1'b1;
+            
+        end 
+        default:begin
+            //do noting 
+        end
+         
+    endcase
     if(flag_zero==BOTH_ZERO) out = 0;
     else if(flag_zero==EITHER_ZERO_RIGHT) out= in0[BIT_WIDTH-1:0];
     else if(flag_zero==EITHER_ZERO_LEFT) out= in1[BIT_WIDTH-1:0]; 
@@ -41,6 +95,7 @@ always@(*)begin
 //BIT_WIDTH * 2 + 1 -: (BIT_WIDTH+1) 여기부터 시작하면 carry시에 값을 날려버리는 현상이 존재한다
 //당연한건데 이딴걸 못보고 븅순..
 // 어차피 캐리 밀어버려서 BIT_WIDTH*2 + 2 해도 ㄱㅊ
+    
 end
 
 

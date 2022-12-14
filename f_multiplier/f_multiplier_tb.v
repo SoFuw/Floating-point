@@ -6,6 +6,7 @@ localparam BIT_WIDTH=32;
 reg clk,rstn;
 reg [BIT_WIDTH-1:0] in0,in1;
 wire [BIT_WIDTH-1:0] out;
+reg [22:0]r_in0,r_in1;
 
 f_multiplier u_f_multiplier(
     .clk(clk),
@@ -39,8 +40,11 @@ initial begin
     $display("push random data..[%0d]\n",$time);
     for(i=0;i<1024;i++)begin
         @(posedge clk);
-        in0=$random;
-        in1=$random;
+        r_in0=$random;
+        r_in1=$random;
+        in0={1'b0,8'b01111111,r_in0};
+        in1={1'b0,8'b00000001,r_in1};
+
         #50
         $fwrite(f,"%b\n",in0);
         $fwrite(f,"%b\n",in1);
