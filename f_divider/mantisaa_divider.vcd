@@ -1,0 +1,78 @@
+$date
+	Wed Dec 21 20:46:52 2022
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ns
+$end
+$scope module mantissa_divider_tb $end
+$var wire 5 ! out [4:0] $end
+$var reg 32 " in0 [31:0] $end
+$var reg 32 # in1 [31:0] $end
+$scope module u_mantisaa_divider $end
+$var wire 32 $ in0 [31:0] $end
+$var wire 32 % in1 [31:0] $end
+$var wire 32 & iter_max [31:0] $end
+$var wire 5 ' out [4:0] $end
+$var reg 12 ( A_Q [11:0] $end
+$var reg 7 ) M [6:0] $end
+$var reg 7 * M_two_complement [6:0] $end
+$var integer 32 + i [31:0] $end
+$var integer 32 , shitf_cnt [31:0] $end
+$scope function calIterBIt $end
+$var reg 1 - bit_width $end
+$var integer 32 . i [31:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+bx .
+x-
+b0 ,
+bx +
+b1011100 *
+b100100 )
+b10110000000 (
+bz '
+b101 &
+b100 %
+b1100 $
+b100 #
+b1100 "
+bz !
+$end
+#10
+b0 +
+#20
+b100000001 (
+b1 ,
+#30
+b1 +
+b1000000010 (
+#40
+b10 ,
+#50
+b10 +
+b10000000100 (
+#60
+b11 ,
+#70
+b11 +
+b100000001000 (
+#80
+b1110001001 (
+b100 ,
+#90
+b100 +
+b11100010010 (
+#100
+b1010010011 (
+b101 ,
+#110
+b101 +
+b10100111 (
+#1000
