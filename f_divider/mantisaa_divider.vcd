@@ -1,5 +1,5 @@
 $date
-	Wed Dec 28 20:55:37 2022
+	Mon Jan  2 20:57:48 2023
 $end
 $version
 	Icarus Verilog
@@ -16,64 +16,37 @@ $var wire 32 $ in0 [31:0] $end
 $var wire 32 % in1 [31:0] $end
 $var wire 32 & iter_max [31:0] $end
 $var wire 5 ' out [4:0] $end
-$var reg 12 ( A_Q [11:0] $end
+$var reg 7 ( A [6:0] $end
 $var reg 7 ) M [6:0] $end
 $var reg 7 * M_two_complement [6:0] $end
-$var reg 1 + carry_down $end
-$var integer 32 , i [31:0] $end
-$var integer 32 - shitf_cnt [31:0] $end
+$var reg 7 + Q [6:0] $end
+$var reg 1 , carry_down $end
+$var integer 32 - i [31:0] $end
+$var integer 32 . shitf_cnt [31:0] $end
 $scope function calIterBIt $end
-$var reg 1 . bit_width $end
-$var integer 32 / i [31:0] $end
+$var reg 1 / bit_width $end
+$var integer 32 0 i [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $enddefinitions $end
 #0
 $dumpvars
-bx /
-x.
-b0 -
-b0 ,
-0+
+bx 0
+x/
+b0 .
+b110 -
+0,
+b1001110 +
 b1011100 *
 b100100 )
-b10110000000 (
-b0 '
-b101 &
+b1000 (
+b111 '
+b110 &
 b100 %
 b1100 $
 b100 #
 b1100 "
-b0 !
-$end
-#10
-b10 !
-b10 '
-b1 ,
-b1000000010 (
-#20
-b100 !
-b100 '
-b10 ,
-b10000000100 (
-#30
-b1000 !
-b1000 '
-b11 ,
-b100000001000 (
-#40
-b10010 !
-b10010 '
-b100 ,
-b11100010010 (
-#50
-b110 !
-b110 '
-b101 ,
-b10100100110 (
-#60
 b111 !
-b111 '
-b10100111 (
+$end
 #1000
